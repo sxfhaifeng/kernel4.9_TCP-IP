@@ -30,7 +30,10 @@ int main(int argc,char *argv[])
 {
 	struct sockaddr_nl sa;	/*定义netlink套接字结构体*/
 	struct nlmsghdr	*nlh = NULL;	/*netlink消息报头结构体*/
-
+	struct iovec iov;
+	struct msghdr msg;
+	int sock_fd,retval;
+	int state_msg = 0;
 
 
 }
