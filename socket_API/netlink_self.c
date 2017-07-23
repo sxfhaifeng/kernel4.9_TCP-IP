@@ -27,14 +27,17 @@
 #define NETLINK_TEST 25	/*定义自己的netlink套接字协议*/
 
 static void sig_init(int signo){
-	struct sockaddr_nl kpeer;:wq
-
-
-
-
-
-
-
+	struct sockaddr_nl kpeer;
+	struct nlmsghdr message;
+	memset(&kpeer,0,sizeof(kpeer));
+	kpeer.nl_family = AF_NETLINK;
+	kpeer.nk_pid = 0;	/*for linux kernel*/
+	kpeer.nl_groups = 0;
+	
+	memset(&message,0,sizeof(message));
+	message.nlmsg_len = NLMSG_LENGTH(0);
+	message.nlmsg_flags = 0;
+	message.nlmsg_type = IMP2_CLOSE;
 }
 
 
