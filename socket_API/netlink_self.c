@@ -26,16 +26,47 @@
 
 #define NETLINK_TEST 25	/*定义自己的netlink套接字协议*/
 
+static void sig_init(int signo){
+	struct sockaddr_nl kpeer;:wq
+
+
+
+
+
+
+
+}
+
+
+
+
 int main(int argc,char *argv[])
 {
-	struct sockaddr_nl sa;	/*定义netlink套接字结构体*/
+	struct sockaddr_nl src_addr,dest_addr;	/*定义netlink套接字结构体*/
 	struct nlmsghdr	*nlh = NULL;	/*netlink消息报头结构体*/
-	struct iovec iov;
+	struct iovec iov;	/*为readv和writev用，the iovec结构体表述一个buffer保存两个文件，一个buffer地址，一个buffer长度*/
+	int sock_fd;
 	struct msghdr msg;
-	int sock_fd,retval;
-	int state_msg = 0;
-
-
+	char *magic = "shutdown";
+	if((sock_fd = socket(AF_NETLINK,SOCK_RAW,NETLINK_USER)) == -1){
+		printf("creat socket error:%s(error:%d)\n",strerror(errno),errno);
+		exit(0);
+	
+	}
+	memset(&src_add,0,sizeof(src_addr));
+	src_addr.nl_family = AF_NETLINK;
+	src_addr.nl_pad	= 0;
+	src_addr.nl_groups = 0;
+	src_addr.nl_pid = getpid();
+	if((bind(sock_fd,(struct sockaddr*)&src_addr,sizeof(src_addr))) == -1){
+		fprintf(stderr,"%s:%d-%d:%s\n",__FILE__,__LINE__,errno,strerror(errno));/*输出文件名、行号、错误号、错误字符串*/
+		goto(Errp);
+	
+	}
+	
+	Errp:
+		close(sock_fd);
+		return 0;
 }
 
 
